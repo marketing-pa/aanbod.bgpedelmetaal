@@ -6,28 +6,69 @@
 
   /* ---------- cookiekeuze ---------- */
   var cc = document.getElementById('cc');
-  if (cc) {
-    if (!ls('bgp_consent')) cc.hidden = false;
+  var C = window.bgpConsent;
+  if (cc && C) {
+    var box = cc.querySelector('.cc'), prefs = document.getElementById('cc-prefs');
+    var prefsBtn = document.getElementById('cc-prefs-btn');
+    var fP = document.getElementById('cc-preferences'), fS = document.getElementById('cc-statistics'), fM = document.getElementById('cc-marketing');
+    var lastFocus = null;
+
+    function setPrefsOpen(open){
+      prefs.hidden = !open;
+      prefsBtn.textContent = open ? 'Keuze opslaan' : 'Instellingen';
+      prefsBtn.setAttribute('data-cc', open ? 'save' : 'prefs');
+    }
+    function openCc(showPrefs){
+      var c = C.get() || {};
+      fP.checked = !!c.preferences; fS.checked = !!c.statistics; fM.checked = !!c.marketing;
+      setPrefsOpen(!!showPrefs);
+      lastFocus = document.activeElement;
+      cc.hidden = false;
+      document.body.classList.add('cc-lock');
+      box.focus();
+    }
+    function closeCc(){
+      cc.hidden = true;
+      document.body.classList.remove('cc-lock');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    // Verplichte keuze: geen sluitknop, Escape en klik ernaast doen niets
+    cc.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); return; }
+      if (e.key !== 'Tab') return;
+      var f = [].filter.call(cc.querySelectorAll('a[href],button,input:not([disabled])'), function(el){ return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === box)) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
     cc.addEventListener('click', function(e){
       var b = e.target.closest('[data-cc]'); if (!b) return;
-      var ok = b.getAttribute('data-cc') === 'granted';
-      ls('bgp_consent', ok ? 'granted' : 'denied');
-      if (ok && window.gtag) {
-        gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
-      }
-      window.dataLayer && dataLayer.push({ event: 'consent_choice', consent: ok ? 'granted' : 'denied' });
-      cc.hidden = true;
+      var a = b.getAttribute('data-cc');
+      if (a === 'prefs') { setPrefsOpen(true); fP.focus(); return; }
+      if (a === 'all')  C.save(true, true, true);
+      if (a === 'none') C.save(false, false, false);
+      if (a === 'save') C.save(fP.checked, fS.checked, fM.checked);
+      closeCc();
     });
+    document.addEventListener('click', function(e){
+      if (e.target.closest('[data-cc-open]')) { e.preventDefault(); openCc(true); }
+    });
+
+    if (!C.get()) openCc(false);
   }
 
   /* ---------- herkomst vastleggen (utm, gclid, fbclid) ---------- */
   var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gbraid','wbraid','fbclid'];
+  // Alleen met marketingtoestemming bewaard in de sessie; anders enkel uit de huidige URL gelezen
   var q = new URLSearchParams(location.search), src = {};
-  try { src = JSON.parse(ss('bgp_src') || '{}'); } catch (e) {}
+  var mk = !!(C && C.get() && C.get().marketing);
+  if (mk) { try { src = JSON.parse(ss('bgp_src') || '{}'); } catch (e) {} } else { ss('bgp_src', null); }
   KEYS.forEach(function(k){ if (q.get(k)) src[k] = q.get(k); });
   if (!src.landing) src.landing = location.href.split('#')[0];
   if (!src.referrer && document.referrer) src.referrer = document.referrer;
-  ss('bgp_src', JSON.stringify(src));
+  if (mk) ss('bgp_src', JSON.stringify(src));
 
   /* ---------- formulier ---------- */
   var form = document.getElementById('aanvraag-form');

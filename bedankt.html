@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body data-thanks>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-58HPHF4V" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header class="lp-head">
   <div class="wrap">
@@ -48,15 +49,27 @@
 <footer>
   <div class="wrap">
     <span>BGP Edelmetaal &nbsp;·&nbsp; KvK 53664116 &nbsp;·&nbsp; Nieuwe Bredase Baan 14A, 4825 BP Breda</span>
-    <span><a href="https://www.bgpedelmetaal.nl/privacy-policy" target="_blank" rel="noopener">Privacyverklaring</a> &nbsp;·&nbsp; <a href="https://www.bgpedelmetaal.nl/cookie-policy" target="_blank" rel="noopener">Cookies</a></span>
+    <span><a href="https://www.bgpedelmetaal.nl/privacy-policy" target="_blank" rel="noopener">Privacyverklaring</a> &nbsp;·&nbsp; <a href="https://www.bgpedelmetaal.nl/cookie-policy" target="_blank" rel="noopener">Cookies</a> &nbsp;·&nbsp; <button type="button" class="linkbtn" data-cc-open>Cookie-instellingen</button></span>
   </div>
 </footer>
 
-<div class="cc" id="cc" role="dialog" aria-live="polite" aria-label="Cookiekeuze" hidden>
-  <p>Wij gebruiken cookies om te meten hoe deze pagina wordt gebruikt en om onze advertenties te verbeteren. Noodzakelijke cookies staan altijd aan. Meer in onze <a href="https://www.bgpedelmetaal.nl/cookie-policy" target="_blank" rel="noopener">cookieverklaring</a>.</p>
-  <div class="cc-row">
-    <button type="button" class="btn btn-line" data-cc="denied">Alleen noodzakelijk</button>
-    <button type="button" class="btn btn-gold" data-cc="granted">Alles accepteren</button>
+<div class="cc-overlay" id="cc" hidden>
+  <div class="cc" role="dialog" aria-modal="true" aria-labelledby="cc-title" aria-describedby="cc-desc" tabindex="-1">
+    <h2 class="cc-title" id="cc-title">Wij respecteren uw privacy</h2>
+    <p id="cc-desc">Wij gebruiken cookies om deze pagina goed te laten werken, om te meten hoe hij gebruikt wordt en om onze advertenties te verbeteren. U kiest zelf welke cookies u toestaat. Uw keuze kunt u altijd aanpassen via &ldquo;Cookie-instellingen&rdquo; onderaan de pagina. Meer in onze <a href="https://www.bgpedelmetaal.nl/cookie-policy" target="_blank" rel="noopener">cookieverklaring</a>.</p>
+
+    <div class="cc-prefs" id="cc-prefs" hidden>
+      <label class="cc-item"><input type="checkbox" checked disabled> <span><b>Noodzakelijk</b>Nodig om de pagina en het formulier te laten werken. Altijd aan.</span></label>
+      <label class="cc-item"><input type="checkbox" id="cc-preferences"> <span><b>Voorkeuren</b>Onthouden instellingen zoals taal of regio.</span></label>
+      <label class="cc-item"><input type="checkbox" id="cc-statistics"> <span><b>Statistieken</b>Anoniem meten hoe bezoekers de pagina gebruiken.</span></label>
+      <label class="cc-item"><input type="checkbox" id="cc-marketing"> <span><b>Marketing</b>Meten welke advertenties werken en relevante advertenties tonen.</span></label>
+    </div>
+
+    <div class="cc-row">
+      <button type="button" class="btn btn-line" data-cc="none">Alles weigeren</button>
+      <button type="button" class="btn btn-line" data-cc="prefs" id="cc-prefs-btn">Instellingen</button>
+      <button type="button" class="btn btn-gold" data-cc="all">Alles accepteren</button>
+    </div>
   </div>
 </div>
 
