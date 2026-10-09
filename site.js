@@ -86,6 +86,24 @@
     form.addEventListener('change', function(e){
       if (e.target.closest('.chips') && collect()) matFld.classList.remove('invalid');
     });
+    // KvK-nummer: alleen cijfers bewaren (spaties, punten of "KvK" bij plakken weg), 8 cijfers verplicht
+    var kvk = document.getElementById('f-kvk');
+    if (kvk) {
+      kvk.addEventListener('input', function(){
+        var d = kvk.value.replace(/\D/g, '').slice(0, 8);
+        if (kvk.value !== d) kvk.value = d;
+        kvk.setCustomValidity('');
+      });
+      kvk.addEventListener('paste', function(e){
+        var t = (e.clipboardData || window.clipboardData).getData('text');
+        e.preventDefault();
+        kvk.value = t.replace(/\D/g, '').slice(0, 8);
+        kvk.dispatchEvent(new Event('input'));
+      });
+      kvk.addEventListener('invalid', function(){
+        kvk.setCustomValidity(kvk.value ? 'Een KvK-nummer bestaat uit 8 cijfers.' : 'Vul uw KvK-nummer in.');
+      });
+    }
     var errEl = document.getElementById('form-err');
     form.addEventListener('submit', function(e){
       e.preventDefault();
