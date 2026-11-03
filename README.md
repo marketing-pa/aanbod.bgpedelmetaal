@@ -14,3 +14,4 @@ Statische landingspagina voor betaald verkeer, gehost op GitHub Pages.
 - dataLayer-events: `form_view`, `form_start`, `form_intent`, `scroll_depth`, `video_view`, `video_play`, `video_pause`, `video_complete`, `lead_submit` (bedanktpagina). Klikken op knoppen dragen `data-cta`.
 - Platformvideo: `assets/platform-rondleiding.mp4` (laadt pas in beeld, zonder geluid, met pauzeknop).
 - Testscenario Make: "BGP - LP aanbod - TEST (kopie, mail alleen naar Magali)", staat uit. Aanzetten en de webhook-URL tijdelijk in een lokale kopie zetten om te testen zonder mail naar BGP.
+- Cache: GitHub Pages bewaart bestanden 10 minuten in de browser. Verhoog bij elke wijziging aan site.js, styles.css of tracking.js het versienummer `?v=` in index.html en bedankt.html, anders zien terugkerende bezoekers tot 10 minuten de oude versie.
