@@ -9,7 +9,7 @@ Statische landingspagina voor betaald verkeer, gehost op GitHub Pages.
 - `CNAME` niet verwijderen, anders valt het subdomein weg
 
 ## Update november 2026 (UX-audit, variant A)
-- Formulier in de hero (desktop rechts, mobiel in twee stappen onder de hero). Opties `aanvraag_type`: Kennismaken / Persoonlijk prijsvoorstel / Eerste partij aanbieden. Verplicht: bedrijfsnaam, naam, telefoon, e-mail. KvK en materiaal optioneel, geen privacyvinkje.
+- Formulier in de hero (desktop rechts, mobiel onder de hero), op alle schermen in twee stappen. Opties `aanvraag_type`: Kennismaken / Persoonlijk prijsvoorstel / Eerste partij aanbieden. Verplicht: bedrijfsnaam, naam, telefoon, e-mail. KvK en materiaal optioneel, geen privacyvinkje.
 - Knoppen met `data-intent` vinken de juiste optie in het formulier aan.
 - dataLayer-events: `form_view`, `form_start`, `form_intent`, `scroll_depth`, `video_view`, `video_play`, `video_pause`, `video_complete`, `lead_submit` (bedanktpagina). Klikken op knoppen dragen `data-cta`.
 - Platformvideo: `assets/platform-rondleiding.mp4` (laadt pas in beeld, zonder geluid, met pauzeknop).

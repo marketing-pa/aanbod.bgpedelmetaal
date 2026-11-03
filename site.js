@@ -96,7 +96,8 @@
     var btn = form.querySelector('button[type="submit"]');
     var changeBtn = form.querySelector('.change');
     var radios = [].slice.call(form.querySelectorAll('input[name="aanvraag_type"]'));
-    var mobile = window.matchMedia('(max-width: 767px)');
+    // Formulier in twee stappen op alle schermen: eerst de keuze, daarna de velden
+    var mobile = { matches: true };
     var started = false;
 
     function collect(){
@@ -114,7 +115,6 @@
       progEl.hidden = false; stepEl.textContent = 'Stap ' + n + ' van 2';
       [].forEach.call(progEl.querySelectorAll('.form-steps i'), function(el, i){ el.classList.toggle('on', i < n); });
     }
-    // Mobiel (onder 768 px): eerst alleen de keuze, de velden klappen open na een tik
     if (mobile.matches && !intent()) { form.classList.add('is-staged'); setStep(1); }
 
     radios.forEach(function(r){
